@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ikusei app</string>
-    <string name="title_home">Home</string>
+    <string name="title_home">ホーム</string>
     <string name="title_dashboard">記録一覧</string>
     <string name="title_notifications">設定</string>
     <!-- TODO: Remove or change this placeholder text -->

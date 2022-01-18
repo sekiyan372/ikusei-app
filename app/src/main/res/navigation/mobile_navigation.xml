@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_target">
 
     <fragment
         android:id="@+id/navigation_home"
@@ -11,21 +11,29 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
-        android:id="@+id/action_homeFragment_to_inputFragment"
-        app:destination="@id/navigation_input" />
+            android:id="@+id/action_homeFragment_to_inputFragment"
+            app:destination="@id/navigation_input" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.suiki.ikuseiapp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_inputFragment"
+            app:destination="@id/navigation_input" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.suiki.ikuseiapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications">
+        <action
+            android:id="@+id/action_notificationsFragment_to_settingFragment"
+            app:destination="@id/navigation_input" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_input"
@@ -34,6 +42,16 @@
         tools:layout="@layout/fragment_input">
         <action
             android:id="@+id/action_inputFragment_to_homeFragment"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_target"
+        android:name="com.example.suiki.ikuseiapp.TargetFragment"
+        android:label="目標設定"
+        tools:layout="@layout/fragment_target">
+        <action
+            android:id="@+id/action_targetFragment_to_homeFragment"
             app:destination="@id/navigation_home" />
     </fragment>
 </navigation>
