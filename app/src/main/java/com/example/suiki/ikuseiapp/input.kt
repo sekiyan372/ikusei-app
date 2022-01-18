@@ -1,12 +1,17 @@
 package com.example.suiki.ikuseiapp
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.example.suiki.ikuseiapp.databinding.FragmentInputBinding
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -19,6 +24,11 @@ class input : Fragment() {
     private var _binding: FragmentInputBinding? = null
     private val binding get() = _binding!!
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val now = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd E")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -27,11 +37,14 @@ class input : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInputBinding.inflate(inflater, container, false)
+        binding.today.text = now.format(dtf)
+
         return binding.root
     }
 
