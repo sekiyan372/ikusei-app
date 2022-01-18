@@ -26,7 +26,7 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.setTargetButton.setOnClickListener {
-            findNavController().navigate(R.id.action_notificationsFragment_to_settingFragment)
+            findNavController().navigate(R.id.action_notificationsFragment_to_targetFragment)
         }
     }
 
