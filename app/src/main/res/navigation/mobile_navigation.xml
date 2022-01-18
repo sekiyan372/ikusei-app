@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_input"
-        android:name="com.example.suiki.ikuseiapp.input"
+        android:name="com.example.suiki.ikuseiapp.Input"
         android:label="入力"
         tools:layout="@layout/fragment_input">
         <action

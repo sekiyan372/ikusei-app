@@ -9,32 +9,30 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.example.suiki.ikuseiapp.databinding.FragmentInputBinding
+import io.realm.Realm
+import io.realm.kotlin.createObject
+import io.realm.kotlin.where
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import java.util.*
 
 class Input : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     private var _binding: FragmentInputBinding? = null
     private val binding get() = _binding!!
+    private lateinit var realm: Realm
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val now = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"))
     @RequiresApi(Build.VERSION_CODES.O)
     private val dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd E")
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val instant = now.toInstant()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        realm = Realm.getDefaultInstance()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -45,34 +43,44 @@ class Input : Fragment() {
         _binding = FragmentInputBinding.inflate(inflater, container, false)
         binding.today.text = now.format(dtf)
 
+        binding.buttonRecord.setOnClickListener {
+            var wakeUp: String = ""
+            var sleep: String = ""
+
+            if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
+                return@setOnClickListener
+            }
+
+            if (!binding.wakeUpTime.text.isNullOrEmpty()) {
+                wakeUp = binding.wakeUpTime.text.toString()
+            }
+
+            if (!binding.sleepTime.text.isNullOrEmpty()) {
+                sleep = binding.sleepTime.text.toString()
+            }
+
+            realm.executeTransaction {
+                val id = realm.where<IndexWakeAndSleep>().max("id")
+                val nextId = (id?.toLong() ?: 0) + 1
+                val indexWakeAndSleep = realm.createObject<IndexWakeAndSleep>(nextId)
+                indexWakeAndSleep.wakeUpTime = wakeUp
+                indexWakeAndSleep.sleepTime = sleep
+                indexWakeAndSleep.dateTime = Date.from(instant)
+            }
+
+            findNavController().navigate(R.id.action_inputFragment_to_homeFragment)
+        }
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonRecord.setOnClickListener {
-            findNavController().navigate(R.id.action_inputFragment_to_homeFragment)
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment input.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Input().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 }
