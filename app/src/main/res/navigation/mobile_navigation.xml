@@ -54,4 +54,5 @@
             android:id="@+id/action_targetFragment_to_homeFragment"
             app:destination="@id/navigation_home" />
     </fragment>
+
 </navigation>
