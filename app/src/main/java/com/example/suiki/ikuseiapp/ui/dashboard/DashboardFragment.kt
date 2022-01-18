@@ -19,15 +19,12 @@ class DashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.inputButton.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_inputFragment)
         }
+
+        return binding.root
     }
 
     override fun onDestroyView() {

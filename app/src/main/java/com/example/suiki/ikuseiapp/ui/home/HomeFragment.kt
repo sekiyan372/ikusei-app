@@ -10,9 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.suiki.ikuseiapp.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -21,15 +19,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.buttonInput.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_inputFragment)
         }
+
+        return binding.root
     }
 
     override fun onDestroyView() {

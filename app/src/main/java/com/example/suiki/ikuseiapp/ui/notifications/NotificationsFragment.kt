@@ -19,15 +19,12 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         binding.setTargetButton.setOnClickListener {
             findNavController().navigate(R.id.action_notificationsFragment_to_targetFragment)
         }
+
+        return binding.root
     }
 
     override fun onDestroyView() {
