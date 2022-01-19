@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.example.suiki.ikuseiapp.databinding.FragmentTargetBinding
 
 class TargetFragment : Fragment() {
@@ -18,8 +20,18 @@ class TargetFragment : Fragment() {
     ): View {
         _binding = FragmentTargetBinding.inflate(inflater, container, false)
 
+        PreferenceManager.getDefaultSharedPreferences(context).apply {
+            val wakeUpTargetTime = getString("wakeUpTargetTime", "")
+            val sleepTargetTime = getString("sleepTargetTime", "")
+
+            binding.wakeUpTarget.setText(wakeUpTargetTime)
+            binding.sleepTarget.setText(sleepTargetTime)
+        }
+
         binding.setButton.setOnClickListener {
+            saveTarget()
             findNavController().navigate(R.id.action_targetFragment_to_homeFragment)
+            Toast.makeText(context, "設定しました", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
@@ -28,5 +40,13 @@ class TargetFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun saveTarget() {
+        val pref = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor = pref.edit()
+        editor.putString("wakeUpTargetTime", binding.wakeUpTarget.text.toString())
+            .putString("sleepTargetTime", binding.sleepTarget.text.toString())
+            .apply()
     }
 }

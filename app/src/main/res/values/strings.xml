@@ -11,6 +11,11 @@
 
     <!--  home  -->
     <string name="buttonInput">Go Input</string>
+    <string name="target">目標時間</string>
+    <string name="viewWakeUpTargetLabel">起床</string>
+    <string name="viewWakeUpTarget">07:00</string>
+    <string name="viewSleepTargetLabel">就寝</string>
+    <string name="viewSleepTarget">00:00</string>
 
     <!--  input  -->
     <string name="today">Today Date</string>
@@ -33,4 +38,5 @@
     <string name="sleepText">23:00</string>
     <string name="indexSleepLabel">就寝</string>
     <string name="deleteButton">削除</string>
+
 </resources>
