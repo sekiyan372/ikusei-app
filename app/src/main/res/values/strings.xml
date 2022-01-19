@@ -1,6 +1,35 @@
 <resources>
     <string name="app_name">ikusei app</string>
+
+    <!--  navigation  -->
     <string name="title_home">ホーム</string>
     <string name="title_dashboard">記録一覧</string>
     <string name="title_notifications">設定</string>
+
+    <!--  dashboard  -->
+    <string name="inputButton">Go Input</string>
+
+    <!--  home  -->
+    <string name="buttonInput">Go Input</string>
+
+    <!--  input  -->
+    <string name="today">Today Date</string>
+    <string name="wakeUpLabel">本日の起床時間</string>
+    <string name="sleepLabel">本日の就寝時間</string>
+    <string name="buttonRecord">記録する</string>
+
+    <!--  notifications(setting)  -->
+    <string name="setTargetButton">目標設定</string>
+
+    <!--  target  -->
+    <string name="wakeUpTarget">起床目標時間</string>
+    <string name="sleepTargetLabel">就寝目標時間</string>
+    <string name="setButton">設定する</string>
+
+    <!--  input_one_result  -->
+    <string name="dateText">2021/01/01 木</string>
+    <string name="wakeUpText">07:00</string>
+    <string name="indexWakeUpLabel">起床</string>
+    <string name="sleepText">23:00</string>
+    <string name="indexSleepLabel">就寝</string>
 </resources>

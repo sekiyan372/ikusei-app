@@ -8,7 +8,10 @@ class CustomApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
-        val config = RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build()
+        val config = RealmConfiguration
+            .Builder()
+            .deleteRealmIfMigrationNeeded()
+            .build()
         Realm.setDefaultConfiguration(config)
     }
 }

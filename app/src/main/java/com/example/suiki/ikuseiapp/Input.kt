@@ -39,13 +39,13 @@ class Input : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentInputBinding.inflate(inflater, container, false)
         binding.today.text = now.format(dtf)
 
         binding.buttonRecord.setOnClickListener {
-            var wakeUp: String = ""
-            var sleep: String = ""
+            var wakeUp = ""
+            var sleep = ""
 
             if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
                 return@setOnClickListener
@@ -61,7 +61,9 @@ class Input : Fragment() {
 
             realm.executeTransaction {
                 val id = realm.where<IndexWakeAndSleep>().max("id")
-                val nextId = (id?.toLong() ?: 0) + 1
+                val nextId = if (id != null) {
+                    (id.toLong() + 1)
+                } else 0
                 val indexWakeAndSleep = realm.createObject<IndexWakeAndSleep>(nextId)
                 indexWakeAndSleep.wakeUpTime = wakeUp
                 indexWakeAndSleep.sleepTime = sleep

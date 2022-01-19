@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,67 +8,66 @@
     tools:context=".TargetFragment">
 
     <TextView
-        android:id="@+id/wake_up_label"
+        android:id="@+id/wakeUpTargetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="起床目標時間"
+        android:text="@string/wakeUpTarget"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.023" />
 
     <EditText
-        android:id="@+id/wake_up_time"
+        android:id="@+id/wakeUpTarget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="time"
+        android:importantForAutofill="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.231"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="LabelFor" />
 
     <TextView
-        android:id="@+id/sleep_label"
+        android:id="@+id/sleepTargetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="就寝目標時間"
+        android:text="@string/sleepTargetLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.394"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.394" />
 
     <EditText
-        android:id="@+id/sleep_time"
+        android:id="@+id/sleepTarget"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="time"
+        android:importantForAutofill="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.539"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="LabelFor" />
 
     <Button
-        android:id="@+id/set_button"
+        android:id="@+id/setButton"
         android:layout_width="469dp"
         android:layout_height="44dp"
-        android:text="設定する"
+        android:text="@string/setButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.717"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.717" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,7 +15,7 @@ class TargetFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTargetBinding.inflate(inflater, container, false)
 
         binding.setButton.setOnClickListener {
