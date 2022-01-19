@@ -1,5 +1,6 @@
 package com.example.suiki.ikuseiapp
 
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.suiki.ikuseiapp.databinding.InputOneResultBinding
@@ -8,10 +9,11 @@ class InputViewHolder(private val binding: InputOneResultBinding):
     RecyclerView.ViewHolder(binding.root)
 {
     var dateText: TextView? = null
-    var wakeUpText: TextView? = null
     var wakeUpLabel: TextView? = null
-    var sleepText: TextView? = null
+    var wakeUpText: TextView? = null
     var sleepLabel: TextView? = null
+    var sleepText: TextView? = null
+    var deleteButton: Button? = null
 
     init {
         dateText = binding.dateText
@@ -19,5 +21,6 @@ class InputViewHolder(private val binding: InputOneResultBinding):
         wakeUpLabel = binding.wakeUpLabel
         sleepText = binding.sleepText
         sleepLabel = binding.sleepLabel
+        deleteButton = binding.deleteButton
     }
 }

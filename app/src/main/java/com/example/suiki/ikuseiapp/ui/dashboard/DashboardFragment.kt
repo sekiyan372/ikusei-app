@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,7 +49,16 @@ class DashboardFragment : Fragment() {
             .sort("id", Sort.DESCENDING)
 
         inputLayoutManager = LinearLayoutManager(requireContext())
-        inputAdapter = CustomInputViewAdapter(realmResults)
+        inputAdapter = CustomInputViewAdapter(
+            realmResults,
+            object: CustomInputViewAdapter.OnButtonClickListener {
+                override fun onDelete(id: Int?) {
+                    deleteRecord(id)
+                    findNavController().navigate(R.id.action_dashboardFragment_to_self)
+                    Toast.makeText(context, "削除しました", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
 
         binding.inputRecyclerView.layoutManager = inputLayoutManager
         binding.inputRecyclerView.adapter = inputAdapter
@@ -62,5 +72,17 @@ class DashboardFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
+    }
+
+    fun deleteRecord(id: Int?) {
+        val record = realm.where(IndexWakeAndSleep::class.java)
+            .equalTo("id", id)
+            ?.findFirst()
+
+        realm.executeTransaction {
+            if (record != null) {
+                record.deleteFromRealm()
+            }
+        }
     }
 }

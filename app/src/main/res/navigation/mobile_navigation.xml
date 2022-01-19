@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_inputFragment"
             app:destination="@id/navigation_input" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_self"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
     <fragment
