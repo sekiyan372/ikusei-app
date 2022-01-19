@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.example.suiki.ikuseiapp.R
 import com.example.suiki.ikuseiapp.databinding.FragmentNotificationsBinding
 
@@ -19,6 +20,14 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+
+        PreferenceManager.getDefaultSharedPreferences(context).apply {
+            val wakeUpTargetTime = getString("wakeUpTargetTime", "")
+            val sleepTargetTime = getString("sleepTargetTime", "")
+
+            binding.viewWakeUpTarget.text = wakeUpTargetTime
+            binding.viewSleepTarget.text = sleepTargetTime
+        }
 
         binding.setTargetButton.setOnClickListener {
             findNavController().navigate(R.id.action_notificationsFragment_to_targetFragment)

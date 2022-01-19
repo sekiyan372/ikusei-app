@@ -23,60 +23,78 @@
         app:layout_constraintVertical_bias="0.8" />
 
     <TextView
-        android:id="@+id/target"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="253dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/target"
+        android:text="モンキー・D・ルフィー"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/currentExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:text="29"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/viewWakeUpTargetLabel"
-        app:layout_constraintEnd_toStartOf="@+id/buttonInput"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/expCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/expCenter" />
 
     <TextView
-        android:id="@+id/viewWakeUpTargetLabel"
+        android:id="@+id/fullExp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="120dp"
-        android:text="@string/viewWakeUpTargetLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewWakeUpTarget" />
+        android:layout_marginEnd="120dp"
+        android:text="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/expCenter"
+        app:layout_constraintTop_toTopOf="@+id/expCenter" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/onepiece01_luffy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expCenter" />
 
     <TextView
-        android:id="@+id/viewWakeUpTarget"
+        android:id="@+id/expCenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="120dp"
-        android:text="@string/viewWakeUpTarget"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewSleepTargetLabel" />
+        android:layout_marginTop="8dp"
+        android:text="/"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@+id/fullExp"
+        app:layout_constraintStart_toEndOf="@+id/currentExp"
+        app:layout_constraintTop_toBottomOf="@+id/nextLevelLabel" />
 
     <TextView
-        android:id="@+id/viewSleepTargetLabel"
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="120dp"
-        android:text="@string/viewSleepTargetLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewSleepTarget" />
+        android:layout_marginTop="16dp"
+        android:text="Lv.1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/viewSleepTarget"
+        android:id="@+id/nextLevelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="120dp"
-        android:text="@string/viewSleepTarget"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonInput" />
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="16dp"
+        android:text="次のレベルまで"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/level" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

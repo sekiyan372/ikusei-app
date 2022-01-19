@@ -22,18 +22,6 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.target.text = "目標時間"
-        binding.viewWakeUpTargetLabel.text = "起床"
-        binding.viewSleepTargetLabel.text = "就寝"
-
-        PreferenceManager.getDefaultSharedPreferences(context).apply {
-            val wakeUpTargetTime = getString("wakeUpTargetTime", "")
-            val sleepTargetTime = getString("sleepTargetTime", "")
-
-            binding.viewWakeUpTarget.text = wakeUpTargetTime
-            binding.viewSleepTarget.text = sleepTargetTime
-        }
-
         binding.buttonInput.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_inputFragment)
         }
