@@ -72,10 +72,10 @@ class Input : Fragment() {
                     indexWakeAndSleep.sleepTime = sleep
                     indexWakeAndSleep.dateTime = Date.from(instant)
                 }
-            } else if (result.wakeUpTime != "" && result.sleepTime != "") {
+            } else if (result.wakeUpTime.isNotEmpty() && result.sleepTime.isNotEmpty()) {
                 Toast.makeText(context, "本日は記録済みです", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            } else if (result.wakeUpTime != "") {
+            } else if (result.wakeUpTime.isNotEmpty()) {
                 if (binding.sleepTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "就寝時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
@@ -84,7 +84,7 @@ class Input : Fragment() {
                         result.sleepTime = binding.sleepTime.text.toString()
                     }
                 }
-            } else if (result.sleepTime != "") {
+            } else if (result.sleepTime.isNotEmpty()) {
                 if (!binding.wakeUpTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
