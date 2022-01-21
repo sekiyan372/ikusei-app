@@ -28,6 +28,8 @@ class Input : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private val dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd E")
     @RequiresApi(Build.VERSION_CODES.O)
+    private val idf = DateTimeFormatter.ofPattern("yyyyMMdd")
+    @RequiresApi(Build.VERSION_CODES.O)
     private val instant = now.toInstant()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,30 +47,52 @@ class Input : Fragment() {
         binding.today.text = now.format(dtf)
 
         binding.buttonRecord.setOnClickListener {
-            var wakeUp = ""
-            var sleep = ""
+            val id = now.format(idf).toInt()
+            val result = realm.where<IndexWakeAndSleep>().equalTo("id", id).findFirst()
 
-            if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
+            if (result == null) {
+                var wakeUp = ""
+                var sleep = ""
+
+                if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
+                    Toast.makeText(context, "値を入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (!binding.wakeUpTime.text.isNullOrEmpty()) {
+                    wakeUp = binding.wakeUpTime.text.toString()
+                }
+
+                if (!binding.sleepTime.text.isNullOrEmpty()) {
+                    sleep = binding.sleepTime.text.toString()
+                }
+                realm.executeTransaction {
+                    val indexWakeAndSleep = realm.createObject<IndexWakeAndSleep>(id)
+                    indexWakeAndSleep.wakeUpTime = wakeUp
+                    indexWakeAndSleep.sleepTime = sleep
+                    indexWakeAndSleep.dateTime = Date.from(instant)
+                }
+            } else if (result.wakeUpTime != "" && result.sleepTime != "") {
+                Toast.makeText(context, "本日は記録済みです", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
-
-            if (!binding.wakeUpTime.text.isNullOrEmpty()) {
-                wakeUp = binding.wakeUpTime.text.toString()
-            }
-
-            if (!binding.sleepTime.text.isNullOrEmpty()) {
-                sleep = binding.sleepTime.text.toString()
-            }
-
-            realm.executeTransaction {
-                val id = realm.where<IndexWakeAndSleep>().max("id")
-                val nextId = if (id != null) {
-                    (id.toLong() + 1)
-                } else 0
-                val indexWakeAndSleep = realm.createObject<IndexWakeAndSleep>(nextId)
-                indexWakeAndSleep.wakeUpTime = wakeUp
-                indexWakeAndSleep.sleepTime = sleep
-                indexWakeAndSleep.dateTime = Date.from(instant)
+            } else if (result.wakeUpTime != "") {
+                if (binding.sleepTime.text.isNullOrEmpty()) {
+                    Toast.makeText(context, "就寝時間を入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                } else {
+                    realm.executeTransaction {
+                        result.sleepTime = binding.sleepTime.text.toString()
+                    }
+                }
+            } else if (result.sleepTime != "") {
+                if (!binding.wakeUpTime.text.isNullOrEmpty()) {
+                    Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                } else {
+                    realm.executeTransaction {
+                        result.wakeUpTime = binding.wakeUpTime.text.toString()
+                    }
+                }
             }
 
             findNavController().navigate(R.id.action_inputFragment_to_homeFragment)
