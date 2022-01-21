@@ -29,9 +29,13 @@ class TargetFragment : Fragment() {
         }
 
         binding.setButton.setOnClickListener {
-            saveTarget()
-            findNavController().navigate(R.id.action_targetFragment_to_homeFragment)
-            Toast.makeText(context, "設定しました", Toast.LENGTH_SHORT).show()
+            if (binding.wakeUpTarget.text.isEmpty() || binding.sleepTarget.text.isEmpty()) {
+                Toast.makeText(context, "両方の目標を入力してください", Toast.LENGTH_SHORT).show()
+            } else {
+                saveTarget()
+                findNavController().navigate(R.id.action_targetFragment_to_homeFragment)
+                Toast.makeText(context, "設定しました", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
