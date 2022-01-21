@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
             chara.name = "モンキー・D・ルフィー"
             chara.level = 1
             chara.exp = 0
-            chara.nextExp = 7
+            chara.nextExp = 8
         }
     }
 
