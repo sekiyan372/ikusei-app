@@ -13,7 +13,6 @@ class InputViewHolder(private val binding: InputOneResultBinding):
     var wakeUpText: TextView? = null
     var sleepLabel: TextView? = null
     var sleepText: TextView? = null
-    var deleteButton: Button? = null
 
     init {
         dateText = binding.dateText
@@ -21,6 +20,5 @@ class InputViewHolder(private val binding: InputOneResultBinding):
         wakeUpLabel = binding.wakeUpLabel
         sleepText = binding.sleepText
         sleepLabel = binding.sleepLabel
-        deleteButton = binding.deleteButton
     }
 }

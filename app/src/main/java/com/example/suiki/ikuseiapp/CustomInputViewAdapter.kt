@@ -11,9 +11,7 @@ import com.example.suiki.ikuseiapp.databinding.InputOneResultBinding
 import io.realm.RealmResults
 import java.text.SimpleDateFormat
 
-class CustomInputViewAdapter(
-        realmResults: RealmResults<IndexWakeAndSleep>,
-        private var listener: OnButtonClickListener)
+class CustomInputViewAdapter(realmResults: RealmResults<IndexWakeAndSleep>)
     : RecyclerView.Adapter<InputViewHolder>()
 {
     private val rResults: RealmResults<IndexWakeAndSleep> = realmResults
@@ -40,13 +38,6 @@ class CustomInputViewAdapter(
         holder.wakeUpLabel?.text = "起床"
         holder.sleepText?.text = input?.sleepTime
         holder.sleepLabel?.text = "就寝"
-        holder.deleteButton?.setOnClickListener {
-            listener.onDelete(input?.id)
-        }
         holder.itemView.setBackgroundColor(if (position % 2 == 0) Color.LTGRAY else Color.WHITE)
-    }
-
-    interface OnButtonClickListener {
-        fun onDelete(id: Int?)
     }
 }
