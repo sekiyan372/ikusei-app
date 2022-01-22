@@ -177,7 +177,10 @@ class Input : Fragment() {
         val cutInputMin = input.substring(3, 5).toInt()
         val sumInputMin = cutInputHour * 60 + cutInputMin
 
-        val result = when (abs(sumTargetMin - sumInputMin)) {
+        val difference = abs(sumTargetMin - sumInputMin)
+        val culDifference = if (difference >= 1290) 1440 - difference else difference
+
+        val result = when (culDifference) {
             in 0..30 -> 10
             in 31..60 -> 8
             in 61..90 -> 6
