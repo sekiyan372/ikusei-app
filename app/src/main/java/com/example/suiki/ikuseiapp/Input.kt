@@ -47,15 +47,21 @@ class Input : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentInputBinding.inflate(inflater, container, false)
+
+        val id = now.format(idf).toInt()
+        val getData = realm.where<IndexWakeAndSleep>().equalTo("id", id).findFirst()
+
         binding.today.text = now.format(dtf)
+        if (getData != null) {
+            binding.wakeUpTime.setText(getData.wakeUpTime)
+            binding.sleepTime.setText(getData.sleepTime)
+        }
 
         binding.buttonRecord.setOnClickListener {
             val pref = PreferenceManager.getDefaultSharedPreferences(context)
             val wakeUpTarget = pref.getString("wakeUpTargetTime", "")
             val sleepTarget = pref.getString("sleepTargetTime", "")
             val regex = Regex("^\\d{2}:\\d{2}$")
-            val id = now.format(idf).toInt()
-            val getData = realm.where<IndexWakeAndSleep>().equalTo("id", id).findFirst()
             var wakeUp = ""
             var sleep = ""
             val character: Chara? = getCharacter(0)
@@ -127,7 +133,7 @@ class Input : Fragment() {
             }
 
             else if (getData.sleepTime.isNotEmpty()) {
-                if (!binding.wakeUpTime.text.isNullOrEmpty()) {
+                if (binding.wakeUpTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
