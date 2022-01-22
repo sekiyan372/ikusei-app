@@ -67,11 +67,13 @@ class Input : Fragment() {
             val character: Chara? = getCharacter(0)
             var getExp = 0
 
+            //目標値がない時
             if (wakeUpTarget.isNullOrEmpty() || sleepTarget.isNullOrEmpty()) {
                 Toast.makeText(context, "目標値が設定されていません", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            //その日の記録がまだない時
             if (getData == null) {
                 var getWakeUpExp = 0
                 var getSleepExp = 0
@@ -109,11 +111,13 @@ class Input : Fragment() {
                 getExp = getWakeUpExp + getSleepExp
             }
 
+            //起床・就寝の両方が記録済みの時
             else if (getData.wakeUpTime.isNotEmpty() && getData.sleepTime.isNotEmpty()) {
                 Toast.makeText(context, "本日は記録済みです", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            //起床だけ記録済みの時
             else if (getData.wakeUpTime.isNotEmpty()) {
                 if (binding.sleepTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "就寝時間を入力してください", Toast.LENGTH_SHORT).show()
@@ -132,6 +136,7 @@ class Input : Fragment() {
                 getExp = calculateExp(sleepTarget, sleep)
             }
 
+            //就寝だけ記録済みの時
             else if (getData.sleepTime.isNotEmpty()) {
                 if (binding.wakeUpTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
@@ -150,6 +155,7 @@ class Input : Fragment() {
                 getExp = calculateExp(wakeUpTarget, wakeUp)
             }
 
+            //経験値とレベル計算
             if (character != null && character.level != 100) {
                 realm.executeTransaction {
                     if (isLevelUp(character, getExp) && character.level == 99) {
