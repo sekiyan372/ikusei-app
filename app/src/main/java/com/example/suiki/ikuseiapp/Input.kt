@@ -53,6 +53,7 @@ class Input : Fragment() {
             val pref = PreferenceManager.getDefaultSharedPreferences(context)
             val wakeUpTarget = pref.getString("wakeUpTargetTime", "")
             val sleepTarget = pref.getString("sleepTargetTime", "")
+            val regex = Regex("^\\d{2}:\\d{2}$")
             val id = now.format(idf).toInt()
             val getData = realm.where<IndexWakeAndSleep>().equalTo("id", id).findFirst()
             var wakeUp = ""
@@ -71,6 +72,14 @@ class Input : Fragment() {
 
                 if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "値を入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (
+                    !binding.wakeUpTime.text.isNullOrEmpty() && !binding.wakeUpTime.text.matches(regex)
+                    || !binding.sleepTime.text.isNullOrEmpty() && !binding.sleepTime.text.matches(regex)
+                ) {
+                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
@@ -103,26 +112,36 @@ class Input : Fragment() {
                 if (binding.sleepTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "就寝時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
-                } else {
-                    sleep = binding.sleepTime.text.toString()
-                    realm.executeTransaction {
-                        getData.sleepTime = sleep
-                    }
-                    getExp = calculateExp(sleepTarget, sleep)
                 }
+
+                if (!binding.sleepTime.text.matches(regex)) {
+                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                sleep = binding.sleepTime.text.toString()
+                realm.executeTransaction {
+                    getData.sleepTime = sleep
+                }
+                getExp = calculateExp(sleepTarget, sleep)
             }
 
             else if (getData.sleepTime.isNotEmpty()) {
                 if (!binding.wakeUpTime.text.isNullOrEmpty()) {
                     Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
-                } else {
-                    wakeUp = binding.wakeUpTime.text.toString()
-                    realm.executeTransaction {
-                        getData.wakeUpTime = wakeUp
-                    }
-                    getExp = calculateExp(wakeUpTarget, wakeUp)
                 }
+
+                if (!binding.wakeUpTime.text.matches(regex)) {
+                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                wakeUp = binding.wakeUpTime.text.toString()
+                realm.executeTransaction {
+                    getData.wakeUpTime = wakeUp
+                }
+                getExp = calculateExp(wakeUpTarget, wakeUp)
             }
 
             if (character != null && character.level != 100) {
@@ -130,7 +149,9 @@ class Input : Fragment() {
                     if (isLevelUp(character, getExp) && character.level == 99) {
                         character.level  = 100
                         character.exp = character.nextExp
-                    } else if (isLevelUp(character, getExp)) {
+                    }
+
+                    else if (isLevelUp(character, getExp)) {
                         character.level += 1
                         character.exp += getExp
                         character.nextExp = calculateNextExp(character.nextExp, character.level)
@@ -139,7 +160,9 @@ class Input : Fragment() {
                             character.level += 1
                             character.nextExp = calculateNextExp(character.nextExp, character.level)
                         }
-                    } else {
+                    }
+
+                    else {
                         character.exp += getExp
                     }
                 }

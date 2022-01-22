@@ -29,13 +29,23 @@ class TargetFragment : Fragment() {
         }
 
         binding.setButton.setOnClickListener {
-            if (binding.wakeUpTarget.text.isEmpty() || binding.sleepTarget.text.isEmpty()) {
+            val wakeUpText = binding.wakeUpTarget.text
+            val sleepText = binding.sleepTarget.text
+            val regex = Regex("^\\d{2}:\\d{2}$")
+
+            if (wakeUpText.isEmpty() || sleepText.isEmpty()) {
                 Toast.makeText(context, "両方の目標を入力してください", Toast.LENGTH_SHORT).show()
-            } else {
-                saveTarget()
-                findNavController().navigate(R.id.action_targetFragment_to_homeFragment)
-                Toast.makeText(context, "設定しました", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            if (!wakeUpText.matches(regex) || !sleepText.matches(regex)) {
+                Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            saveTarget()
+            findNavController().navigate(R.id.action_targetFragment_to_homeFragment)
+            Toast.makeText(context, "設定しました", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root
