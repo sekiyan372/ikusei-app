@@ -66,6 +66,8 @@ class Input : Fragment() {
             var sleep = ""
             val character: Chara? = getCharacter(0)
             var getExp = 0
+            val wakeUpText = binding.wakeUpTime.text
+            val sleepText = binding.sleepTime.text
 
             //目標値がない時
             if (wakeUpTarget.isNullOrEmpty() || sleepTarget.isNullOrEmpty()) {
@@ -78,26 +80,25 @@ class Input : Fragment() {
                 var getWakeUpExp = 0
                 var getSleepExp = 0
 
-                if (binding.wakeUpTime.text.isNullOrEmpty() && binding.sleepTime.text.isNullOrEmpty()) {
+                if (wakeUpText.isNullOrEmpty() && sleepText.isNullOrEmpty()) {
                     Toast.makeText(context, "値を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (
-                    !binding.wakeUpTime.text.isNullOrEmpty() && !binding.wakeUpTime.text.matches(regex)
-                    || !binding.sleepTime.text.isNullOrEmpty() && !binding.sleepTime.text.matches(regex)
+                if (!wakeUpText.isNullOrEmpty() && !wakeUpText.matches(regex)
+                    || !sleepText.isNullOrEmpty() && !sleepText.matches(regex)
                 ) {
-                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"正しい形式で入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (!binding.wakeUpTime.text.isNullOrEmpty()) {
-                    wakeUp = binding.wakeUpTime.text.toString()
+                if (!wakeUpText.isNullOrEmpty()) {
+                    wakeUp = wakeUpText.toString()
                     getWakeUpExp = calculateExp(wakeUpTarget, wakeUp)
                 }
 
-                if (!binding.sleepTime.text.isNullOrEmpty()) {
-                    sleep = binding.sleepTime.text.toString()
+                if (!sleepText.isNullOrEmpty()) {
+                    sleep = sleepText.toString()
                     getSleepExp = calculateExp(sleepTarget, sleep)
                 }
 
@@ -119,17 +120,17 @@ class Input : Fragment() {
 
             //起床だけ記録済みの時
             else if (getData.wakeUpTime.isNotEmpty()) {
-                if (binding.sleepTime.text.isNullOrEmpty()) {
+                if (sleepText.isNullOrEmpty()) {
                     Toast.makeText(context, "就寝時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (!binding.sleepTime.text.matches(regex)) {
-                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                if (!sleepText.matches(regex)) {
+                    Toast.makeText(context,"正しい形式で入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                sleep = binding.sleepTime.text.toString()
+                sleep = sleepText.toString()
                 realm.executeTransaction {
                     getData.sleepTime = sleep
                 }
@@ -138,17 +139,17 @@ class Input : Fragment() {
 
             //就寝だけ記録済みの時
             else if (getData.sleepTime.isNotEmpty()) {
-                if (binding.wakeUpTime.text.isNullOrEmpty()) {
+                if (wakeUpText.isNullOrEmpty()) {
                     Toast.makeText(context, "起床時間を入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                if (!binding.wakeUpTime.text.matches(regex)) {
-                    Toast.makeText(context, "正しい形式で入力してください", Toast.LENGTH_SHORT).show()
+                if (!wakeUpText.matches(regex)) {
+                    Toast.makeText(context,"正しい形式で入力してください", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
-                wakeUp = binding.wakeUpTime.text.toString()
+                wakeUp = wakeUpText.toString()
                 realm.executeTransaction {
                     getData.wakeUpTime = wakeUp
                 }
